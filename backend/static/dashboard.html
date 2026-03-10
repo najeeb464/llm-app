@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BillEase Observability Dashboard</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h1>📊 BillEase Observability Dashboard</h1>
+
+    <section id="statsSection" class="stats-section">
+        <div class="stat-card">
+            <h3>Total Traces</h3>
+            <p id="totalTraces">—</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Average Response Time</h3>
+            <p id="avgResponse">—</p>
+        </div>
+
+        <div class="stat-card large">
+            <h3>Category Breakdown</h3>
+            <div id="categoryBreakdown"></div>
+        </div>
+    </section>
+
+    <section class="trace-section">
+        <div class="trace-header">
+            <h2>Trace List</h2>
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option>Billing</option>
+                <option>Refund</option>
+                <option>Account Access</option>
+                <option>Cancellation</option>
+                <option>General Inquiry</option>
+            </select>
+        </div>
+
+        <table class="trace-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>User Message</th>
+                    <th>Bot Response</th>
+                    <th>Category</th>
+                    <th>Response Time</th>
+                </tr>
+            </thead>
+            <tbody id="traceTableBody"></tbody>
+        </table>
+    </section>
+</div>
+
+<script src="/static/dashboard.js"></script>
+</body>
+</html>
