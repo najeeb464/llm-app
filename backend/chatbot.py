@@ -5,9 +5,9 @@ from pydantic import BaseModel
 from google import genai
 import os
 import time
+import requests
 
-
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+# client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
 SYSTEM_PROMPT = """You are a friendly and professional customer support agent for BillEase, a SaaS billing platform. Your role is to help customers with billing inquiries, account issues, refunds, cancellations, and general questions.
 
@@ -30,24 +30,58 @@ class ChatResponse(BaseModel):
     response_time: float
 
 
-async def generate_response(user_message: str) -> tuple[str, float]:
+#using gemnai
+# async def generate_response(user_message: str) -> tuple[str, float]:
+#     start = time.time()
+
+#     result = client.models.generate_content(
+#         model="gemini-2.0-flash",
+#         contents=[
+#             # {"role": "system", "text": SYSTEM_PROMPT},
+#             # {"role": "user", "text": user_message},
+#            SYSTEM_PROMPT,
+#            user_message,
+#         ],
+#         config={
+#             "temperature": 0.7,
+#             "max_output_tokens": 256,
+#         }
+#     )
+
+#     response_text = result.text.strip()
+#     elapsed = round(time.time() - start, 3)
+
+#     return response_text, elapsed
+
+
+#lcoall olama
+def generate_llama2_response(prompt: str):
     start = time.time()
 
-    result = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=[
-            # {"role": "system", "text": SYSTEM_PROMPT},
-            # {"role": "user", "text": user_message},
-           SYSTEM_PROMPT,
-           user_message,
-        ],
-        config={
-            "temperature": 0.7,
-            "max_output_tokens": 256,
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={
+            "model": "llama2",
+            "prompt": prompt,
+            "stream": False
         }
     )
 
-    response_text = result.text.strip()
-    elapsed = round(time.time() - start, 3)
+    data = response.json()
+    text = data["response"]
+    response_time = round(time.time() - start, 3)
 
-    return response_text, elapsed
+    return text, response_time
+
+
+async def generate_response(message: str):
+    SYSTEM_PROMPT = """
+    You are a friendly and professional BillEase support assistant.
+    Keep responses short, helpful, and empathetic.
+    """
+
+    prompt = f"{SYSTEM_PROMPT}\nUser: {message}\nAssistant:"
+
+    bot_response, response_time = generate_llama2_response(prompt)
+
+    return bot_response, response_time

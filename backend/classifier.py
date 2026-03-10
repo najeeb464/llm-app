@@ -1,7 +1,8 @@
 from google import genai
 import os
 
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+import requests
+# client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
 VALID_CATEGORIES = [
     "Billing",
@@ -56,24 +57,51 @@ Category: General Inquiry
 Classify the following conversation. Respond with ONLY the category name — no explanation, no punctuation, no extra text. Your response must be exactly one of: Billing, Refund, Account Access, Cancellation, General Inquiry"""
 
 
-async def classify_trace(user_message: str, bot_response: str) -> str:
+# async def classify_trace(user_message: str, bot_response: str) -> str:
+#     conversation_text = f'User: "{user_message}"\nBot: "{bot_response}"'
+
+#     result = client.models.generate_content(
+#         model="gemini-2.0-flash",
+#         contents=[
+#             # {"role": "system", "text": CLASSIFICATION_PROMPT},
+#             # {"role": "user", "text": conversation_text},
+#              CLASSIFICATION_PROMPT,
+#             conversation_text,
+#         ],
+#         config={
+#             "temperature": 0,
+#             "max_output_tokens": 10,
+#         }
+#     )
+
+#     category = result.text.strip()
+#     if category not in VALID_CATEGORIES:
+#         category = "General Inquiry"
+
+#     return category
+
+
+def classify_trace(user_message: str, bot_response: str) -> str:
     conversation_text = f'User: "{user_message}"\nBot: "{bot_response}"'
 
-    result = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=[
-            # {"role": "system", "text": CLASSIFICATION_PROMPT},
-            # {"role": "user", "text": conversation_text},
-             CLASSIFICATION_PROMPT,
-            conversation_text,
-        ],
-        config={
-            "temperature": 0,
-            "max_output_tokens": 10,
-        }
-    )
+    prompt = f"""
+    {CLASSIFICATION_PROMPT}
 
-    category = result.text.strip()
+    {conversation_text}
+
+    Return ONLY the category name.
+    """
+    response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": "llama2", 
+                "prompt": prompt,
+                "stream": False
+            }
+        ).json()
+
+    category = response["response"].strip()
+
     if category not in VALID_CATEGORIES:
         category = "General Inquiry"
 
