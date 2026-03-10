@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BillEase Support Chat</title>
+    <meta name="description" content="BillEase customer support chatbot — get help with billing, refunds, account access, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Animated background orbs -->
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
+
+    <div class="chat-container" id="chatContainer">
+        <!-- Header -->
+        <header class="chat-header">
+            <div class="chat-header__brand">
+                <div class="chat-header__icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="chat-header__title">BillEase Support</h1>
+                    <p class="chat-header__status">
+                        <span class="status-dot"></span>
+                        Online — Typically replies instantly
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Messages area -->
+        <main class="chat-messages" id="chatMessages">
+            <!-- Welcome message -->
+            <div class="message message--bot message--animate">
+                <div class="message__avatar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="message__content">
+                    <p>👋 Hi there! I'm your BillEase support assistant. How can I help you today?</p>
+                    <span class="message__time" id="welcomeTime"></span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Input area -->
+        <footer class="chat-input">
+            <div class="chat-input__wrapper">
+                <input
+                    type="text"
+                    id="messageInput"
+                    class="chat-input__field"
+                    placeholder="Type your message…"
+                    autocomplete="off"
+                    maxlength="500"
+                >
+                <button id="sendButton" class="chat-input__send" title="Send message" aria-label="Send message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="chat-input__hint">Each message is independent — no conversation history is retained.</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
