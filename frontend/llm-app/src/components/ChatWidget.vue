@@ -150,6 +150,11 @@
     }
   };
   
+  const refreshData= async () =>{
+    // await nextTick();
+    await fetchAnalytics();
+    await fetchTraces();
+  }
   const handleSend = async () => {
     const text = input.value.trim();
     if (!text || loading.value) return;
