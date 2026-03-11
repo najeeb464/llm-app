@@ -55,7 +55,7 @@ class ChatResponse(BaseModel):
 
 
 #lcoall olama
-def generate_llama2_response(prompt: str):
+async def generate_llama2_response(prompt: str):
     start = time.time()
 
     response = requests.post(
@@ -82,6 +82,6 @@ async def generate_response(message: str):
 
     prompt = f"{SYSTEM_PROMPT}\nUser: {message}\nAssistant:"
 
-    bot_response, response_time = generate_llama2_response(prompt)
+    bot_response, response_time = await generate_llama2_response(prompt)
 
     return bot_response, response_time
