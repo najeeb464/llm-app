@@ -81,7 +81,7 @@ Classify the following conversation. Respond with ONLY the category name — no 
 #     return category
 
 
-def classify_trace(user_message: str, bot_response: str) -> str:
+async def classify_trace(user_message: str, bot_response: str) -> str:
     conversation_text = f'User: "{user_message}"\nBot: "{bot_response}"'
 
     prompt = f"""
