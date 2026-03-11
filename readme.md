@@ -52,6 +52,6 @@ git clone https://github.com/najeeb464/llm-app.git
 ## Notes
 - Ensure you have Python 3 and Node.js installed.
 - Make sure to activate the virtual environment each time before running the backend.
-- The frontend will be accessible at `http://localhost:3000` (default Vue.js dev server port).
+- The frontend will be accessible at   `http://localhost:5173` or `http://localhost:3000` (default Vue.js dev server port).
 
 ## Enjoy exploring the LLM App!
